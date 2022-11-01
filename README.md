@@ -10,6 +10,14 @@
   - [Node.js a npm](#nodejs-a-npm)
   - [Nerd fonty](#nerd-fonty)
   - [Neofetch - systémové informace pro CLI](#neofetch---systémové-informace-pro-cli)
+- [Instalace neovim](#instalace-neovim)
+  - [Prerekvizity](#prerekvizity-1)
+  - [Symlinky do konfiguračních adresářů](#symlinky-do-konfiguračních-adresářů)
+  - [Instalace](#instalace)
+    - [Provider nodejs pro neovim](#provider-nodejs-pro-neovim)
+    - [TODO Provider python pro neovim](#todo-provider-python-pro-neovim)
+    - [TODO Provider ruby pro neovim](#todo-provider-ruby-pro-neovim)
+    - [TODO Provider perl pro neovim](#todo-provider-perl-pro-neovim)
 
 # Prerekvizity
 
@@ -129,4 +137,61 @@ Ukonči PowerShell konzoli.
 scoop install neofetch
 ```
 
-TODO 
+# Instalace [neovim](https://neovim.io/)
+
+## Prerekvizity
+
+- [x] Pokud chci používat nejnovější verzi [neovim](https://github.com/neovim/neovim) musím přidat *bucket* [versions](https://github.com/ScoopInstaller/Versions), kde je manifest [neovim-nightly](https://github.com/neovim/neovim/releases/tag/nightly). Protože se bude linkovat umístění konfigurace do repozitáře, prováděj scripty v powershellu spuštěném jako administrátor
+
+```powershell
+scoop bucket add versions
+```
+
+- [x] Dalším vhodným doplňkem je *vcredist2022*, který se nachází v *bucketu* [extras](https://github.com/ScoopInstaller/Extras)
+```powershell
+scoop bucket add extras
+scoop install vcredist2022
+```
+
+## Symlinky do konfiguračních adresářů
+
+- [x] Kofigurční adresáře jsou součástí repozitáře. V prostředí windows není možné využít `XDG` proměnné prostředí, tak využiji *symlinky*.
+
+```powershell
+$repo = "$home\repos\github.com\IshiKakesuFun\dotfiles-win";
+
+$lnvim = "$env:LOCALAPPDATA\nvim";
+$lnvimData = $lnvim + "-data";
+
+$nvim = $repo + "\.config\nvim";
+$nvimData = $nvim + "-data";
+
+if (Test-Path "$lnvim") {
+    (Get-Item "$lnvim").Delete();
+}
+New-Item -ItemType SymbolicLink -Path "$lnvim" -Target "$nvim";
+
+if (Test-Path "$lnvimData") {
+    (Get-Item "$lnvimData").Delete();
+}
+New-Item -ItemType SymbolicLink -Path "$lnvimData" -Target "$nvimData";
+```
+## Instalace 
+
+- [x] Nainstaluj nigthly build
+```powershell
+scoop install neovim-nightly
+scool list
+```
+
+### Provider nodejs pro neovim
+
+- [x] Nainstaluje nodejs provider pro neovim jako globální balíček 
+```powershell
+npm install -g neovim
+npm -g list
+```
+
+### TODO Provider python pro neovim
+### TODO Provider ruby pro neovim
+### TODO Provider perl pro neovim
