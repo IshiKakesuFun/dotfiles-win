@@ -2,6 +2,15 @@
 
 ![GitHub tag (latest SemVer)](https://img.shields.io/github/v/tag/IshiKakesuFun/dotfiles-win)
 
+- [Personal dotfiles for Windows](#personal-dotfiles-for-windows)
+- [Prerekvizity](#prerekvizity)
+  - [Scoop CLI installer](#scoop-cli-installer)
+  - [Git](#git)
+  - [NVM manažer verzí node.js a npm](#nvm-manažer-verzí-nodejs-a-npm)
+  - [Node.js a npm](#nodejs-a-npm)
+  - [Nerd fonty](#nerd-fonty)
+  - [Neofetch - systémové informace pro CLI](#neofetch---systémové-informace-pro-cli)
+
 # Prerekvizity
 
 ## Scoop CLI installer
@@ -94,3 +103,30 @@ nvm list
 node -v
 npm -v
 ```
+
+## Nerd fonty
+
+- [x] [Nerd-fonts](https://www.nerdfonts.com) tvoří smostatný [bucket](https://github.com/matthewjberger/scoop-nerd-fonts), který musíme nejprve přidata a vygenerovat pro nej *manifest*. Fonty se instaluji u starších verzí windows s jen s administrátorským oprávněním, a proto otevři PowerShell jako admnistrátor, přidej *bucket* a přegeneruj *manifest*.
+
+```powershel
+scoop bucket add nerd-fonts
+cd $home\scoop\buckets\nerd-fonts
+.\bin\generate-manifests.ps1 -OverwriteExisting
+```
+
+- [x] Nainstaluj vybraný font
+  
+```powershell
+scoop install JetBrainsMono-NF
+scoop install JetBrainsMono-NF-Mono
+```
+
+Ukonči PowerShell konzoli.
+
+## Neofetch - systémové informace pro CLI
+
+```cmd
+scoop install neofetch
+```
+
+TODO 
