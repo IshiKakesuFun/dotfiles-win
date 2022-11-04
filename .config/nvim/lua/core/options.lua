@@ -2,10 +2,11 @@
 vim.g.cursorhold_updatetime = 100
 vim.g.loaded_python3_provider = 0
 
+
 local o = vim.opt
 
 o.exrc = true
-o.autochdir = true
+o.autochdir = false
 o.updatetime = 50  -- [set updatetime=50] Faster completion
 o.timeoutlen = 800 -- By default timeoutlen is 1000 ms
 
