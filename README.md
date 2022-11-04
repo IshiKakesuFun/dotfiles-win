@@ -269,6 +269,15 @@ z *bucketu* [versions](https://github.com/ScoopInstaller/Versions).
 scoop install ripgrep
 rg --version
 ```
+### Tree Sitter CLI
+
+- [ ] Některé parsery se pro neovim musí vygerenerovat přímo aplikací
+  [TreeSitteru](https://tree-sitter.github.io/tree-sitter).
+
+```powershell
+scoop install tree-sitter
+tree-sitter -V
+```
 
 ### Symlinky do konfiguračních adresářů
 

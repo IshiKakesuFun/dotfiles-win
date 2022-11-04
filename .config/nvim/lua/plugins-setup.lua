@@ -28,33 +28,34 @@ end
 
 -- add list of plugins to install
 return packer.startup(function(use)
-	-- packer can manage itself
-	use("wbthomason/packer.nvim")
+  -- packer can manage itself
+  use("wbthomason/packer.nvim")
 
-	use("nvim-lua/plenary.nvim") -- collection of lua functions that many plugins use
+  use("nvim-lua/plenary.nvim") -- collection of lua functions that many plugins use
   use({
     "nvim-lua/popup.nvim", 
     requires = { "nvim-lua/plenary.nvim" },
   })
-  
+
   -- color scheme
   use("ellisonleao/gruvbox.nvim")
 
-	-- essential plugins
+  -- essential plugins
 
-	use("tpope/vim-surround") -- add, delete, change surroundings (it's awesome)
-	-- commenting with gc, gb
-	use("numToStr/Comment.nvim")
+  -- add, delete, change surroundings (it's awesome)
+  use("tpope/vim-surround") 
+  -- commenting with gc, gb
+  use("numToStr/Comment.nvim")
   -- quick scope navigation
   use("unblevable/quick-scope")
   -- window maximizer
   use("szw/vim-maximizer")
 
-  	-- statusline
-	use("nvim-lualine/lualine.nvim")
+  -- statusline
+  use("nvim-lualine/lualine.nvim")
 
-	-- vs-code like icons
-	use("kyazdani42/nvim-web-devicons")
+  -- vs-code like icons
+  use("kyazdani42/nvim-web-devicons")
 
   -- File/project explorer
   use({
@@ -64,8 +65,15 @@ return packer.startup(function(use)
     },
   })
 
+  -- treesitter configuration
+  use({
+    "nvim-treesitter/nvim-treesitter",
+    run = function()
+      require("nvim-treesitter.install").update({ with_sync = true })
+    end,
+  })
 
-	if packer_bootstrap then
-		require("packer").sync()
-	end
+  if packer_bootstrap then
+    require("packer").sync()
+  end
 end)
