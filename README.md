@@ -271,12 +271,22 @@ rg --version
 ```
 ### Tree Sitter CLI
 
-- [ ] Některé parsery se pro neovim musí vygerenerovat přímo aplikací
-  [TreeSitteru](https://tree-sitter.github.io/tree-sitter).
+- [x] Některé parsery se pro neovim musí vygerenerovat přímo aplikací
+  [TreeSitter](https://tree-sitter.github.io/tree-sitter).
 
 ```powershell
 scoop install tree-sitter
 tree-sitter -V
+```
+
+### fd - souborový vyhledavač
+
+- [x] Pluginy neovimu mohou s výhodou použít účinný souborový vyhledavač
+  [fd](https://github.com/sharkdp/fd) (náhrada *find*).
+
+```powershell
+scoop install fd
+fd -V
 ```
 
 ### Symlinky do konfiguračních adresářů
