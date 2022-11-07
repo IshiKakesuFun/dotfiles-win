@@ -16,6 +16,12 @@ if not state then
   return
 end
 
+-- import telescope actions state safely
+local state, actions = pcall(require, "telescope.actions")
+if not state then
+  return
+end
+
 -- import telescope actions.state safely
 local state, actions_state = pcall(require, "telescope.actions.state")
 if not state then
@@ -78,8 +84,12 @@ M.search_repos = function()
   M.git_or_find_files(options)
 end
 
-M.change_direcotry_to_entry = function(options)
-
+M.change_directory_to_entry = function(prompt_bufnr)
+  local selection = actions_state.get_selected_entry()
+  local dir = vim.fn.fnamemodify(selection.path, ":p:h")
+  actions.close(prompt_bufnr)
+  -- Depending on what you want put `cd`, `lcd`, `tcd`
+  vim.cmd(string.format("silent lcd %s", dir))
 end
 
 -- Clone the default Telescope configuration
@@ -99,6 +109,7 @@ plugin.setup {
     mappings = {
       n = {
         ["<M-p"] = layout.toggle_preview,
+        ["cd"] = M.change_directory_to_entry,
       },
       i = {
         ["<C-u"] = false, -- If you'd prefer Telescope to clear the prompt on 
