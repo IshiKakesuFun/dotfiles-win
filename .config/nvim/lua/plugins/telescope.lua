@@ -16,11 +16,11 @@ if not state then
   return
 end
 
--- -- import telescope actions safely
--- local state, actions = pcall(require, "telescope.actions")
--- if not state then
---   return
--- end
+-- import telescope actions.state safely
+local state, actions_state = pcall(require, "telescope.actions.state")
+if not state then
+  return
+end
 
 -- import telescope actions.layout safely
 local state, layout = pcall(require, "telescope.actions.layout")
@@ -47,21 +47,20 @@ M.git_or_find_files = function(options)
   end
 end
 
-M.grep_current_word = function()
+M.grep_for = function()
   local options = { 
-    search = vim.fn.imput("Grep for >"),
+    search = vim.fn.input(" find word: "),
   }
   builtin.grep_string(options)
 end
 
 M.grep_current_word = function()
   local options = { 
-    prompt_title = "< grep current word >",
+    prompt_title = "< find selected word >",
     search = vim.fn.expand("<cword>"),
   }
   builtin.grep_string(options)
 end
-
 
 M.dot_files = function()
   local options = { 
@@ -77,6 +76,10 @@ M.search_repos = function()
     cwd = REPOS,
   }
   M.git_or_find_files(options)
+end
+
+M.change_direcotry_to_entry = function(options)
+
 end
 
 -- Clone the default Telescope configuration
@@ -148,7 +151,8 @@ u.set_keymap('n', { noremap = true, silent = true }, {
   { '<Leader>tp', '<cmd>lua require("plugins.telescope").git_or_find_files()<CR>' },
   { '<Leader>tq', '<cmd>Telescope quickfix<CR>' },
   { '<Leader>tr', '<cmd>Telescope registers<CR>' },
-  { '<Leader>ts', '<cmd>Telescope grep_string<CR>' },
+  -- { '<Leader>ts', '<cmd>Telescope grep_string<CR>' },
+  { '<Leader>ts', '<cmd>lua require("plugins.telescope").grep_for()<CR>' },
   { '<Leader>tw', '<cmd>lua require("plugins.telescope").grep_current_word()<CR>' },
 
   { '<Leader>td', '<cmd>lua require("plugins.telescope").dot_files()<CR>' },
