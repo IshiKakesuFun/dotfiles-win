@@ -215,6 +215,15 @@ Zavři a znovu otevři konzoli a ověř funkčnost vypsáním seznamu kontainer�
 docker ps
 ```
 
+## Lua
+
+- [x] Nainstaluj n8stroje pro vývoj v jazyce Lua
+
+```powershell
+scoop install lua
+lua -v
+```
+
 ## Rust
 
 - [x] Nainstaluj nástroje pro vývoj v jazyce Rust
