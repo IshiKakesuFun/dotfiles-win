@@ -85,7 +85,12 @@ return packer.startup(function(use)
       "nvim-lua/plenary.nvim" 
     },
   })
-
+  use({
+    "iamcco/markdown-preview.nvim",
+    run = function() 
+      vim.fn["mkdp#util#install"]() 
+    end,
+})
 
   if packer_bootstrap then
     require("packer").sync()
