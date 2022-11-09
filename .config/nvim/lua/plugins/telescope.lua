@@ -84,12 +84,24 @@ M.search_repos = function()
   M.git_or_find_files(options)
 end
 
-M.change_directory_to_entry = function(prompt_bufnr)
+M.change_directory_to_entry = function(prompt_bufnr, cmd)
   local selection = actions_state.get_selected_entry()
   local dir = vim.fn.fnamemodify(selection.path, ":p:h")
   actions.close(prompt_bufnr)
   -- Depending on what you want put `cd`, `lcd`, `tcd`
-  vim.cmd(string.format("silent lcd %s", dir))
+  vim.cmd(string.format("silent " .. cmd .. " %s", dir))
+end
+
+M.cd_to_entry = function(prompt_bufnr)
+  M.change_directory_to_entry(prompt_bufnr, "cd") 
+end
+
+M.lcd_to_entry = function(prompt_bufnr)
+  M.change_directory_to_entry(prompt_bufnr, "lcd") 
+end
+
+M.tcd_to_entry = function(prompt_bufnr)
+  M.change_directory_to_entry(prompt_bufnr, "tcd") 
 end
 
 -- Clone the default Telescope configuration
@@ -109,7 +121,9 @@ plugin.setup {
     mappings = {
       n = {
         ["<M-p"] = layout.toggle_preview,
-        ["cd"] = M.change_directory_to_entry,
+        ["cd"] = M.cd_to_entry,
+        ["lcd"] = M.lcd_to_entry,
+        ["tcd"] = M.tcd_to_entry,
       },
       i = {
         ["<C-u"] = false, -- If you'd prefer Telescope to clear the prompt on 

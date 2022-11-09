@@ -18,16 +18,24 @@ u.set_keymap('n', { noremap = true, silent = true }, {
   { '\\', '' },
 
   -- window management
-  { "sv", "<C-w>v" }, -- split window vertically
-  { "ss", "<C-w>s" }, -- split window horizontally
+  { "sv", "<cmd>vsplit<CR><C-w>l" }, -- split window vertically, move to new
+  { "ss", "<cmd>split<CR><C-w>j" }, -- split window horizontally, move to new
   { "se", "<C-w>=" }, -- make split windows equal width & height
   { "sc", ":close<CR>" }, -- close current split window
+  { "sx", "<C-w>x" }, -- exchange splited windows
 
   -- Smart way to move between windows
-  { '<C-h>', '<C-w>h' },
-  { '<C-j>', '<C-w>j' },
-  { '<C-k>', '<C-w>k' },
-  { '<C-l>', '<C-w>l' },
+  { 'sh', '<C-w>h' },
+  { 'sj', '<C-w>j' },
+  { 'sk', '<C-w>k' },
+  { 'sl', '<C-w>l' },
+  { 's<Left>', '<C-w>h' },
+  { 's<Down>', '<C-w>j' },
+  { 's<Up>', '<C-w>k' },
+  { 's<Right>', '<C-w>l' },
+
+  -- tabs manegement
+  { 'te', ':tabedit<CR>' },
 
   -- Smart way to move between tabs
   -- { '<A-h>', 'gT' },
@@ -47,13 +55,21 @@ u.set_keymap('n', { noremap = true, silent = true }, {
   { '0', '^' },
   { '^', '0' },
 
+  -- select all
+  { '<C-a>', 'ggVG' },
+
   -- delete single character without copying into register
   { "x", '"_x' },
 
   -- pwd
   { '<leader>cd', ':cd %:p:h<CR>:pwd<CR>' },
-  { '<leader>cl', ':lcd %:p:h<CR>:pwd<CR>' },
+  { '<leader>lcd', ':lcd %:p:h<CR>:pwd<CR>' },
+  { '<leader>tcd', ':tcd %:p:h<CR>:pwd<CR>' },
   
+  -- increment/decrement
+  { '+', '<C-a>' },
+  { '-', '<C-x>' },
+
   -- conversion unicode
   -- { '<leader>2uc', ':lua require("utils.unicode").replace_hex_to_char()<CR>' },
   -- { '<leader>2ux', ':lua require("utils.unicode").replace_char_to_hex()<CR>' },
@@ -68,7 +84,7 @@ u.set_keymap('n', { noremap = true, silent = false }, {
   {  '<leader><CR>', ':luafile %<CR>' },
   -- greatest remap ever
   { '<leader>y', '"+y' },
-  { '<leader>Y', 'gg^"+yG' },
+  { '<leader>Y', 'ggVG"+y' },
   { '<leader>d', '"_d' },
   { '<leader>D', '"_D' },
 })
@@ -100,4 +116,3 @@ u.set_keymap('i', { noremap = true, silent = true }, {
   -- use jk to exit insert mode
   { "jk", "<ESC>" },
 })
-
