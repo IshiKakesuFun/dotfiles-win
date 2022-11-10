@@ -2,28 +2,7 @@
 
 ![GitHub tag (latest SemVer)](https://img.shields.io/github/v/tag/IshiKakesuFun/dotfiles-win)
 
-- [Personal dotfiles for Windows](#personal-dotfiles-for-windows)
-- [Prerekvizity](#prerekvizity)
-  - [Scoop CLI installer](#scoop-cli-installer)
-  - [Instalace nástrojů pro vývoj](#instalace-nástrojů-pro-vývoj)
-  - [Git](#git)
-  - [NVM manažer verzí node.js a npm](#nvm-manažer-verzí-nodejs-a-npm)
-  - [Node.js a npm](#nodejs-a-npm)
-  - [Nerd fonty](#nerd-fonty)
-  - [CMake, gcc, VC redist](#cmake-gcc-vc-redist)
-  - [Docker](#docker)
-  - [Rust](#rust)
-  - [Deno](#deno)
-  - [Neofetch - systémové informace pro CLI](#neofetch---systémové-informace-pro-cli)
-- [Instalace neovim](#instalace-neovim)
-  - [Prerekvizity](#prerekvizity-1)
-    - [Ripgrep](#ripgrep)
-    - [Symlinky do konfiguračních adresářů](#symlinky-do-konfiguračních-adresářů)
-  - [Instalace](#instalace)
-    - [Provider nodejs pro neovim](#provider-nodejs-pro-neovim)
-    - [TODO Provider python pro neovim](#todo-provider-python-pro-neovim)
-    - [TODO Provider ruby pro neovim](#todo-provider-ruby-pro-neovim)
-    - [TODO Provider perl pro neovim](#todo-provider-perl-pro-neovim)
+[[_toc_]]
 
 # Prerekvizity
 
@@ -36,7 +15,7 @@ minimálními nároky na uživatele.
 - potlačuje vyskakovací okna oprávnění
 - potlačuje gui instalační wizardy
 - zabraňuje nadměrnému množství položek v PATH 
-- zabraňuje neočekávaným nechtěným vedlejším efektům spojšeným s instalací 
+- zabraňuje neočekávaným nechtěným vedlejším efektům spojeným s instalací 
   resp. odinstalací programů
 - vyhledává a automaticky instaluje závislosti
 - provádí všechna dodatečná nastavení tak, aby programu mohl ihned běžet
@@ -166,7 +145,7 @@ Zavři a znovu otevři konzoli
 
 ## CMake, gcc, VC redist
 
-Některé aplikace, resp. jejich pluginy, nedistribuuji buildy pro cílový OS či
+Některé aplikace, resp. jejich pluginy, nedistribuují buildy pro cílový OS či
 architekturu a v rámci instalačního postup se musí zkompilovat a sestavit ze
 zdrojových kódů. K tomu je zapotřebí nainstalovat příslušné nástroje, aby byl
 tzv. *build/toolchain* připraven.
@@ -217,7 +196,7 @@ docker ps
 
 ## Lua
 
-- [x] Nainstaluj n8stroje pro vývoj v jazyce Lua
+- [x] Nainstaluj nástroje pro vývoj v jazyce Lua
 
 ```powershell
 scoop install lua

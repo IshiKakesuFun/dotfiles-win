@@ -107,7 +107,7 @@ o.guifont = 'JetBrainsMonoNL NFM:h10'
 o.backspace = "indent,eol,start"
 
 -- clipboard
-o.clipboard:append("unnamedplus")
+o.clipboard:prepend({ "unnamed", "unnamedplus" })
 
 -- split windows
 o.splitright = true
