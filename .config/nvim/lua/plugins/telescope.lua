@@ -1,41 +1,40 @@
 --------------------------------------------------------------------------------
 -- https://github.com/nvim-telescope/telescope.nvim
 --------------------------------------------------------------------------------
+local state, telescope, builtin, config, actions, actions_state, layout, u
 -- import plugin safely
-local state, plugin = pcall(require, "telescope")
+state, telescope = pcall(require, "telescope")
 if not state then
   return
 end
 -- import builtin safely
-local state, builtin = pcall(require, "telescope.builtin") if not state then return
+state, builtin = pcall(require, "telescope.builtin")
+if not state then
+  return
 end
-
 -- import telescope config safely
-local state, config = pcall(require, "telescope.config")
+state, config = pcall(require, "telescope.config")
 if not state then
   return
 end
-
 -- import telescope actions state safely
-local state, actions = pcall(require, "telescope.actions")
+state, actions = pcall(require, "telescope.actions")
 if not state then
   return
 end
-
 -- import telescope actions.state safely
-local state, actions_state = pcall(require, "telescope.actions.state")
+state, actions_state = pcall(require, "telescope.actions.state")
 if not state then
   return
 end
-
 -- import telescope actions.layout safely
-local state, layout = pcall(require, "telescope.actions.layout")
+state, layout = pcall(require, "telescope.actions.layout")
 if not state then
   return
 end
 
 -- import modul safely
-local state, u = pcall(require, "core.utils")
+state, u = pcall(require, "core.utils")
 if not state then
   return
 end
@@ -54,14 +53,14 @@ M.git_or_find_files = function(options)
 end
 
 M.grep_for = function()
-  local options = { 
+  local options = {
     search = vim.fn.input(" find word: "),
   }
   builtin.grep_string(options)
 end
 
 M.grep_current_word = function()
-  local options = { 
+  local options = {
     prompt_title = "< find selected word >",
     search = vim.fn.expand("<cword>"),
   }
@@ -69,7 +68,7 @@ M.grep_current_word = function()
 end
 
 M.dot_files = function()
-  local options = { 
+  local options = {
     prompt_title = "< VimRC >",
     cwd = CONFIG_PATH,
   }
@@ -93,15 +92,15 @@ M.change_directory_to_entry = function(prompt_bufnr, cmd)
 end
 
 M.cd_to_entry = function(prompt_bufnr)
-  M.change_directory_to_entry(prompt_bufnr, "cd") 
+  M.change_directory_to_entry(prompt_bufnr, "cd")
 end
 
 M.lcd_to_entry = function(prompt_bufnr)
-  M.change_directory_to_entry(prompt_bufnr, "lcd") 
+  M.change_directory_to_entry(prompt_bufnr, "lcd")
 end
 
 M.tcd_to_entry = function(prompt_bufnr)
-  M.change_directory_to_entry(prompt_bufnr, "tcd") 
+  M.change_directory_to_entry(prompt_bufnr, "tcd")
 end
 
 -- Clone the default Telescope configuration
@@ -114,7 +113,7 @@ table.insert(vimgrep_arguments, "!.git/*")
 
 -- You dont need to set any of these options. These are the default ones. Only
 -- the loading is important
-plugin.setup {
+telescope.setup {
   defaults = {
     -- `hidden = true` is not supported in text grep commands.
     vimgrep_arguments = vimgrep_arguments,
@@ -142,6 +141,7 @@ plugin.setup {
       find_command = { "rg", "--files", "--hidden", "--glob", "!.git/*" },
     },
     git_files = {
+      show_untracked = true,
       prompt_prefix = " ",
       selection_caret = " ",
     },
@@ -162,13 +162,17 @@ plugin.setup {
 }
 -- To get fzf loaded and working with telescope, you need to call
 -- load_extension, somewhere after setup function:
-plugin.load_extension("fzf")
+telescope.load_extension("fzf")
+-- To get file explorer loaded and working with telescope, you need to call
+-- load_extension, somewhere after setup function:
+telescope.load_extension("file_browser")
 
 
 u.set_keymap('n', { noremap = true, silent = true }, {
   { '<Leader>ti', '<cmd>Telescope builtin<CR>' }, -- all buildin functions
 
   { '<Leader>tb', '<cmd>Telescope buffers<CR>' },
+  { '<Leader>te', '<cmd>Telescope file_browser path=%:p:h<CR>' },
   { '<Leader>tff', '<cmd>Telescope find_files<CR>' },
   { '<Leader>tg', '<cmd>Telescope live_grep<CR>' },
   { '<Leader>th', '<cmd>Telescope help_tags<CR>' },

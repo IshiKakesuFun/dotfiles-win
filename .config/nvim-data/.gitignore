@@ -3,3 +3,4 @@ site/
 rplugin.vim
 log
 telescope*
+mason*

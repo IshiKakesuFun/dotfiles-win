@@ -33,17 +33,19 @@ return packer.startup(function(use)
 
   use("nvim-lua/plenary.nvim") -- collection of lua functions that many plugins use
   use({
-    "nvim-lua/popup.nvim", 
+    "nvim-lua/popup.nvim",
     requires = { "nvim-lua/plenary.nvim" },
   })
 
   -- color scheme
   use("ellisonleao/gruvbox.nvim")
+  use("EdenEast/nightfox.nvim")
+  use("arcticicestudio/nord-vim")
 
   -- essential plugins
 
   -- add, delete, change surroundings (it's awesome)
-  use("tpope/vim-surround") 
+  use("tpope/vim-surround")
   -- commenting with gc, gb
   use("numToStr/Comment.nvim")
   -- quick scope navigation
@@ -75,20 +77,52 @@ return packer.startup(function(use)
 
   -- Telescope
   use ({
-    "nvim-telescope/telescope-fzf-native.nvim", 
+    "nvim-telescope/telescope-fzf-native.nvim",
     run = "cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build"
   })
   use ({
-    "nvim-telescope/telescope.nvim", 
+    "nvim-telescope/telescope.nvim",
     branch = '0.1.x',
-    requires = { 
-      "nvim-lua/plenary.nvim" 
+    requires = {
+      "nvim-lua/plenary.nvim"
     },
   })
+  use("nvim-telescope/telescope-file-browser.nvim")
+
+  -- autocompletion
+  use("hrsh7th/nvim-cmp") -- completion plugin
+  use("hrsh7th/cmp-buffer") -- source for text in buffer
+  use("hrsh7th/cmp-path") -- source for file system paths
+  -- snippets
+  use("L3MON4D3/LuaSnip") -- snippet engine
+  use("saadparwaiz1/cmp_luasnip") -- for autocompletion
+  use("rafamadriz/friendly-snippets") -- useful snippets
+
+  -- managing and installing LSP servers
+  use("williamboman/mason.nvim") -- in charge of managing lsp servers, linters & formatters
+  use("williamboman/mason-lspconfig.nvim") -- bridges gap b/w mason & lspconfig
+
+  -- configuration of LSP servers
+  use("neovim/nvim-lspconfig") -- easily configure language servers
+  use("hrsh7th/cmp-nvim-lsp") -- for autocompletion
+  use({
+    "glepnir/lspsaga.nvim",
+    branch = "main"
+  })
+
+  -- enhanced lsp uis
+  use("jose-elias-alvarez/typescript.nvim") -- additional functionality for typescript server (e.g. rename file & update imports)
+  use("onsails/lspkind.nvim") -- vs-code like icons for autocompletion
+
+  -- formatting & linting
+  use("jose-elias-alvarez/null-ls.nvim") -- configure formatters & linters
+  use("jayp0521/mason-null-ls.nvim") -- bridges gap b/w mason & null-ls
+
+  -- Tools
   use({
     "iamcco/markdown-preview.nvim",
-    run = function() 
-      vim.fn["mkdp#util#install"]() 
+    run = function()
+      vim.fn["mkdp#util#install"]()
     end,
 })
 

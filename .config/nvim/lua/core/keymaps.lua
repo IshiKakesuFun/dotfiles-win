@@ -35,7 +35,7 @@ u.set_keymap('n', { noremap = true, silent = true }, {
   { 's<Right>', '<C-w>l' },
 
   -- tabs manegement
-  { 'te', ':tabedit<CR>' },
+  { '<C-t>e', ':tabedit<CR>' },
 
   -- Smart way to move between tabs
   -- { '<A-h>', 'gT' },
@@ -65,23 +65,28 @@ u.set_keymap('n', { noremap = true, silent = true }, {
   { '<leader>cd', ':cd %:p:h<CR>:pwd<CR>' },
   { '<leader>lcd', ':lcd %:p:h<CR>:pwd<CR>' },
   { '<leader>tcd', ':tcd %:p:h<CR>:pwd<CR>' },
-  
+
   -- increment/decrement
   { '+', '<C-a>' },
   { '-', '<C-x>' },
 
   -- conversion unicode
-  -- { '<leader>2uc', ':lua require("utils.unicode").replace_hex_to_char()<CR>' },
-  -- { '<leader>2ux', ':lua require("utils.unicode").replace_char_to_hex()<CR>' },
+  { '<leader>2c', ':lua require("core.utils").replace_hex_to_char()<CR>' },
+  { '<leader>2x', ':lua require("core.utils").replace_char_to_hex()<CR>' },
+  { '<leader>2yc', ':lua require("core.utils").yank_hex_to_char()<CR>' },
+  { '<leader>2yx', ':lua require("core.utils").yank_char_to_hex()<CR>' },
 
-  { '<Leader>e', ':NvimTreeToggle<CR>' }
+  { '<Leader>e', ':NvimTreeToggle<CR>' },
 })
 
 -- normal non-silent
 u.set_keymap('n', { noremap = true, silent = false }, {
   -- source lua files
   { '<leader>.<CR>', ':luafile ' .. CONFIG_PATH .. '\\init.lua<CR>' },
-  {  '<leader><CR>', ':luafile %<CR>' },
+  { '<leader><CR>', ':luafile %<CR>' },
+  { '<leader>tt1', '<cmd>colorscheme gruvbox<CR><cmd>luafile ' .. CONFIG_PATH .. '\\init.lua<CR>' },
+  { '<leader>tt2', '<cmd>colorscheme nightfox<CR><cmd>luafile ' .. CONFIG_PATH .. '\\init.lua<CR>' },
+  { '<leader>tt3', '<cmd>colorscheme nord<CR><cmd>luafile ' .. CONFIG_PATH .. '\\init.lua<CR>' },
   -- greatest remap ever
   { '<leader>y', '"+y' },
   { '<leader>Y', 'ggVG"+y' },
@@ -112,7 +117,7 @@ u.set_keymap('i', { noremap = true, silent = true }, {
 
   -- insert special carachters
   -- { '<C-b>', '<C-k>' },
-  
+
   -- use jk to exit insert mode
   { "jk", "<ESC>" },
 })

@@ -6,7 +6,10 @@ require("core.options")
 require("core.keymaps")
 
 -- plugins with setup
-require("plugins.gruvbox")
+require("colorscheme.gruvbox")
+require("colorscheme.nightfox")
+require("colorscheme.nord")
+
 require("plugins.quickscope")
 require("plugins.comment")
 require("plugins.maximizer")
@@ -15,3 +18,9 @@ require("plugins.nvim-tree")
 require("plugins.treesitter")
 require("plugins.telescope")
 require("plugins.markdown-preview")
+require("plugins.nvim-cmp")
+-- lsp
+require("plugins.lsp.mason")
+require("plugins.lsp.lspsaga")
+require("plugins.lsp.lspconfig")
+require("plugins.lsp.null-ls")
