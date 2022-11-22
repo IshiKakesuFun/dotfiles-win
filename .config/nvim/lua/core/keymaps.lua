@@ -3,8 +3,8 @@ vim.g.mapleader = " "
 vim.g.maplocalleader = "\\"
 
 -- import modul safely
-local state, u = pcall(require, "core.utils")
-if not state then
+local status, u = pcall(require, "core.utils")
+if not status then
 	return
 end
 ---------------------
@@ -64,6 +64,9 @@ u.set_keymap("n", { noremap = true, silent = true }, {
 	-- select all
 	{ "<C-a>", "ggVG" },
 
+	-- capy all messages to clipboard
+	{ "<leader>cm", "<cmd>let @*=execute('messages')<cr>" },
+
 	-- delete single character without copying into register
 	{ "x", '"_x' },
 
@@ -90,14 +93,13 @@ u.set_keymap("n", { noremap = true, silent = false }, {
 	-- source lua files
 	{ "<leader>.<CR>", ":luafile " .. CONFIG_PATH .. "\\init.lua<CR>" },
 	{ "<leader><CR>", ":luafile %<CR>" },
-	{ "<leader>tt1", "<cmd>colorscheme gruvbox<CR><cmd>luafile " .. CONFIG_PATH .. "\\init.lua<CR>" },
-	{ "<leader>tt2", "<cmd>colorscheme nightfox<CR><cmd>luafile " .. CONFIG_PATH .. "\\init.lua<CR>" },
-	{ "<leader>tt3", "<cmd>colorscheme nord<CR><cmd>luafile " .. CONFIG_PATH .. "\\init.lua<CR>" },
 	-- greatest remap ever
 	{ "<leader>y", '"+y' },
 	{ "<leader>Y", 'ggVG"+y' },
 	{ "<leader>d", '"_d' },
 	{ "<leader>D", '"_D' },
+	-- wipe trailing blanks
+	{ "<leader>ft", "<cmd>%s/\\s\\+$//g<CR>" },
 })
 
 -- visual
@@ -113,6 +115,7 @@ u.set_keymap("v", { noremap = true, silent = false }, {
 	{ "<leader>p", '"_dP' },
 	{ "<leader>y", '"+y' },
 	{ "<leader>d", '"_d' },
+	{ "<leader>ft", "<cmd>'<,'>s/\\s\\+$//g<CR>" },
 })
 
 -- insert

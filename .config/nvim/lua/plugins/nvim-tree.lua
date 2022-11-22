@@ -1,9 +1,10 @@
+local status, nvim_tree, u
 --------------------------------------------------------------------------------
 -- https://github.com/nvim-tree/nvim-tree.lua
 --------------------------------------------------------------------------------
 -- import plugin safely
-local setup, plugin = pcall(require, "nvim-tree")
-if not setup then
+status, nvim_tree = pcall(require, "nvim-tree")
+if not status then
 	return
 end
 
@@ -11,7 +12,7 @@ end
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 
-plugin.setup({
+nvim_tree.setup({
   auto_reload_on_write = true,                -- default: true
   create_in_closed_folder = false,            -- default: false
   disable_netrw = false,                      -- default: false
@@ -33,7 +34,7 @@ plugin.setup({
   remove_keymaps = false,                     -- default: false
   select_prompts = false,                     -- default: false
   view = {
-    adaptive_size = false,                    -- default: false 
+    adaptive_size = false,                    -- default: false
     centralize_selection = false,             -- default: false
     width = 30,                               -- default: 30
     hide_root_folder = false,                 -- default: false
@@ -86,7 +87,7 @@ plugin.setup({
       padding = " ",                          -- default: " "
       symlink_arrow = " ➛ ",                  -- default: " ➛ "
       show = {
-        file = true,                          -- default: true 
+        file = true,                          -- default: true
         folder = true,                        -- default: true
         folder_arrow = false,                 -- default: true
         git = true,                           -- default: true
@@ -117,11 +118,11 @@ plugin.setup({
       },
     },
     special_files = {                         -- default: { "Cargo.toml", "Makefile", "README.md", "readme.md" }
-      "Cargo.toml", 
-      "Makefile", 
-      "README.md", 
+      "Cargo.toml",
+      "Makefile",
+      "README.md",
       "readme.md",
-    }, 
+    },
     symlink_destination = true,               -- default: true
   },
   hijack_directories = {
@@ -228,8 +229,8 @@ plugin.setup({
 })
 
 -- import modul safely
-local state, u = pcall(require, "core.utils")
-if not state then
+status, u = pcall(require, "core.utils")
+if not status then
 	return
 end
 

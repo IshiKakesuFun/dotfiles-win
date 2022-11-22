@@ -1,18 +1,18 @@
-local state, cmp, luasnip, lspkind
+local status, cmp, luasnip, lspkind
 --------------------------------------------------------------------------------
 -- https://github.com/hrsh7th/nvim-cmp
 --------------------------------------------------------------------------------
 -- import plugin safely
-state, cmp = pcall(require, "cmp")
-if not state then
+status, cmp = pcall(require, "cmp")
+if not status then
 	return
 end
 --------------------------------------------------------------------------------
 -- https://github.com/L3MON4D3/LuaSnip
 --------------------------------------------------------------------------------
 -- import plugin safely
-state, luasnip = pcall(require, "luasnip")
-if not state then
+status, luasnip = pcall(require, "luasnip")
+if not status then
 	return
 end
 --------------------------------------------------------------------------------
@@ -26,8 +26,8 @@ vim.opt.completeopt = "menu,menuone,noselect"
 -- https://github.com/onsails/lspkind.nvim
 --------------------------------------------------------------------------------
 -- import lspkind plugin safely
-state, lspkind = pcall(require, "lspkind")
-if not state then
+status, lspkind = pcall(require, "lspkind")
+if not status then
 	return
 end
 

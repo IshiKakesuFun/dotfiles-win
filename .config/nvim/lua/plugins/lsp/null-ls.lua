@@ -1,9 +1,9 @@
-local state, null_ls
+local status, null_ls
 --------------------------------------------------------------------------------
 -- https://github.com/jose-elias-alvarez/null-ls.nvim
 --------------------------------------------------------------------------------
-state, null_ls = pcall(require, "null-ls")
-if not state then
+status, null_ls = pcall(require, "null-ls")
+if not status then
 	return
 end
 

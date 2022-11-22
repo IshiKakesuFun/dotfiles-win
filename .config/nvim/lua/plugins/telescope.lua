@@ -1,41 +1,41 @@
 --------------------------------------------------------------------------------
 -- https://github.com/nvim-telescope/telescope.nvim
 --------------------------------------------------------------------------------
-local state, telescope, builtin, config, actions, actions_state, layout, u
+local status, telescope, builtin, config, actions, actions_state, layout, u
 -- import plugin safely
-state, telescope = pcall(require, "telescope")
-if not state then
+status, telescope = pcall(require, "telescope")
+if not status then
 	return
 end
 -- import builtin safely
-state, builtin = pcall(require, "telescope.builtin")
-if not state then
+status, builtin = pcall(require, "telescope.builtin")
+if not status then
 	return
 end
 -- import telescope config safely
-state, config = pcall(require, "telescope.config")
-if not state then
+status, config = pcall(require, "telescope.config")
+if not status then
 	return
 end
 -- import telescope actions state safely
-state, actions = pcall(require, "telescope.actions")
-if not state then
+status, actions = pcall(require, "telescope.actions")
+if not status then
 	return
 end
 -- import telescope actions.state safely
-state, actions_state = pcall(require, "telescope.actions.state")
-if not state then
+status, actions_state = pcall(require, "telescope.actions.state")
+if not status then
 	return
 end
 -- import telescope actions.layout safely
-state, layout = pcall(require, "telescope.actions.layout")
-if not state then
+status, layout = pcall(require, "telescope.actions.layout")
+if not status then
 	return
 end
 
 -- import modul safely
-state, u = pcall(require, "core.utils")
-if not state then
+status, u = pcall(require, "core.utils")
+if not status then
 	return
 end
 
@@ -104,7 +104,8 @@ M.tcd_to_entry = function(prompt_bufnr)
 end
 
 -- Clone the default Telescope configuration
-local vimgrep_arguments = { unpack(config.values.vimgrep_arguments) }
+table.unpack = table.unpack or unpack -- 5.1 compatibility
+local vimgrep_arguments = { table.unpack(config.values.vimgrep_arguments) }
 -- I want to search in hidden/dot files.
 table.insert(vimgrep_arguments, "--hidden")
 -- I don't want to search in the `.git` directory.

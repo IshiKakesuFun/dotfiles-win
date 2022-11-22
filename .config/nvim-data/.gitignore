@@ -1,6 +1,7 @@
 shada/
 site/
 rplugin.vim
+*.log
 log
 telescope*
 mason*

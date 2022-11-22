@@ -52,8 +52,14 @@ return packer.startup(function(use)
 	use("unblevable/quick-scope")
 	-- window maximizer
 	use("szw/vim-maximizer")
+	-- symlinks resolver makes vim-fugitive behave properly with linked files
+	use({
+		"aymericbeaumet/vim-symlink",
+		requires = { "moll/vim-bbye" },
+	})
 
 	-- git
+	use("tpope/vim-fugitive")
 	use("lewis6991/gitsigns.nvim")
 
 	-- statusline

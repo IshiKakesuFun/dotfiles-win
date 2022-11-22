@@ -1,10 +1,10 @@
-local state, saga
+local status, saga
 --------------------------------------------------------------------------------
 -- https://github.com/glepnir/lspsaga.nvim
 --------------------------------------------------------------------------------
 -- import plugin safely
-state, saga = pcall(require, "lspsaga")
-if not state then
+status, saga = pcall(require, "lspsaga")
+if not status then
 	return
 end
 

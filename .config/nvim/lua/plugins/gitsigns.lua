@@ -81,22 +81,25 @@ gitsigns.setup({
 			return "<ignore>"
 		end, { expr = true })
 
+		local actionsOpts = { noremap = true, silent = true }
 		-- actions
-		map({ "n", "v" }, "<leader>hs", ":gitsigns stage_hunk<cr>")
-		map({ "n", "v" }, "<leader>hr", ":gitsigns reset_hunk<cr>")
-		map("n", "<leader>hs", gs.stage_buffer)
-		map("n", "<leader>hu", gs.undo_stage_hunk)
-		map("n", "<leader>hr", gs.reset_buffer)
-		map("n", "<leader>hp", gs.preview_hunk)
+		map({ "n", "v" }, "<leader>hs", "<cmd>Gitsigns stage_hunk<cr>", actionsOpts)
+		map({ "n", "v" }, "<leader>hr", "<cmd>Gitsigns reset_hunk<cr>", actionsOpts)
+		map("n", "<leader>ha", gs.stage_buffer, actionsOpts)
+		map("n", "<leader>hR", gs.reset_buffer, actionsOpts)
+		map("n", "<leader>hf", gs.refresh, actionsOpts)
+		map("n", "<leader>hu", gs.undo_stage_hunk, actionsOpts)
+		map("n", "<leader>hi", gs.preview_hunk_inline, actionsOpts)
+		map("n", "<leader>hp", gs.preview_hunk, actionsOpts)
 		map("n", "<leader>hb", function()
 			gs.blame_line({ full = true })
-		end)
-		map("n", "<leader>htb", gs.toggle_current_line_blame)
-		map("n", "<leader>hd", gs.diffthis)
+		end, actionsOpts)
+		map("n", "<leader>htb", gs.toggle_current_line_blame, actionsOpts)
+		map("n", "<leader>hd", gs.diffthis, actionsOpts)
 		map("n", "<leader>hD", function()
 			gs.diffthis("~")
-		end)
-		map("n", "<leader>htd", gs.toggle_deleted)
+		end, actionsOpts)
+		map("n", "<leader>htd", gs.toggle_deleted, actionsOpts)
 
 		-- text object
 		map({ "o", "x" }, "ih", ":<c-u>gitsigns select_hunk<cr>")

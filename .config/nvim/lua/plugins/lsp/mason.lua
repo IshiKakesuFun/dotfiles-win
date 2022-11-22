@@ -1,26 +1,26 @@
-local state, mason, mason_lsp, mason_null_ls
+local status, mason, mason_lsp, mason_null_ls
 --------------------------------------------------------------------------------
 -- https://github.com/williamboman/mason.nvim
 --------------------------------------------------------------------------------
 -- import plugin safely
-state, mason = pcall(require, "mason")
-if not state then
+status, mason = pcall(require, "mason")
+if not status then
 	return
 end
 --------------------------------------------------------------------------------
 -- https://github.com/williamboman/mason-lspconfig.nvim
 --------------------------------------------------------------------------------
 -- import plugin safely
-state, mason_lsp = pcall(require, "mason-lspconfig")
-if not state then
+status, mason_lsp = pcall(require, "mason-lspconfig")
+if not status then
 	return
 end
 --------------------------------------------------------------------------------
 -- https://github.com/jayp0521/mason-null-ls.nvim
 --------------------------------------------------------------------------------
 -- import plugin safely
-state, mason_null_ls = pcall(require, "mason-null-ls")
-if not state then
+status, mason_null_ls = pcall(require, "mason-null-ls")
+if not status then
 	return
 end
 
@@ -32,26 +32,26 @@ mason_lsp.setup({
 	-- This setting has no relation with the `automatic_installation` setting.
 	ensure_installed = {
 		"sumneko_lua",
-		"tsserver",
-		"cssls",
-		"tailwindcss",
-		"html",
-		"rust_analyzer",
-		"denols",
-		"yamlls",
-		"taplo",
+		-- "tsserver",
+		-- "cssls",
+		-- "tailwindcss",
+		-- "html",
+		-- "rust_analyzer",
+		-- "denols",
+		-- "yamlls",
+		-- "taplo",
 		-- "sqlls",
-		"jdtls",
-		"jsonls",
-		"dockerls",
-		"bashls",
-		"csharp_ls",
-		"angularls",
-		"gopls",
-		"graphql",
-		"prismals",
-		"vimls",
-		"emmet_ls",
+		-- "jdtls",
+		-- "jsonls",
+		-- "dockerls",
+		-- "bashls",
+		-- "csharp_ls",
+		-- "angularls",
+		-- "gopls",
+		-- "graphql",
+		-- "prismals",
+		-- "vimls",
+		-- "emmet_ls",
 	},
 	-- Whether servers that are set up (via lspconfig) should be automatically
 	-- installed if they're not already installed.
@@ -67,10 +67,10 @@ mason_lsp.setup({
 
 mason_null_ls.setup({
 	ensure_installed = {
-		"deno_fmt",
+		-- "deno_fmt",
 		"prettier",
 		"stylua",
-		"eslint_d",
+		-- "eslint_d",
 		-- "sql_formatter",
 		-- "sqlfluff", -- requires pip3 to install via Mason
 	},

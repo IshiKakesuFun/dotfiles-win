@@ -8,14 +8,14 @@ vim.g.maximizer_set_default_mapping = 1
 vim.g.maximizer_set_mapping_with_bang = 1
 
 -- The default mappings key
-vim.g.maximizer_default_mapping_key = '<F11>'
+vim.g.maximizer_default_mapping_key = "<F11>"
 
 -- import modul safely
-local state, u = pcall(require, "core.utils")
-if not state then
-  return
+local ststus, u = pcall(require, "core.utils")
+if not ststus then
+	return
 end
 -- normal
-u.set_keymap('n', { noremap = true, silent = true }, {
-  { "sm",  ":MaximizerToggle!<CR>" },
+u.set_keymap("n", { noremap = true, silent = true }, {
+	{ "sm", ":MaximizerToggle!<CR>" },
 })

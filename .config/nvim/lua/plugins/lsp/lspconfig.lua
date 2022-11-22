@@ -1,147 +1,258 @@
-local state, lspconfig, cmp_nvim_lsp, typescript, u
+local status,
+lspconfig,
+protocol,
+cmp_nvim_lsp, -- typescript,
+u
 --------------------------------------------------------------------------------
 -- https://github.com/neovim/nvim-lspconfig
 --------------------------------------------------------------------------------
 -- import plugin safely
-state, lspconfig = pcall(require, "lspconfig")
-if not state then
-	return
+status, lspconfig = pcall(require, "lspconfig")
+if not status then
+  return
 end
 --------------------------------------------------------------------------------
 -- https://github.com/hrsh7th/cmp-nvim-lsp
 --------------------------------------------------------------------------------
 -- import plugin safely
-state, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
-if not state then
-	return
+status, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
+if not status then
+  return
 end
 --------------------------------------------------------------------------------
 -- https://github.com/jose-elias-alvarez/typescript.nvim
 --------------------------------------------------------------------------------
 -- import plugin safely
-state, typescript = pcall(require, "typescript")
-if not state then
-	return
-end
+-- status, typescript = pcall(require, "typescript")
+-- if not status then
+-- 	return
+-- end
 
 -- import modul safely
-state, u = pcall(require, "core.utils")
-if not state then
-	return
+status, u = pcall(require, "core.utils")
+if not status then
+  return
 end
+
+-- lsp protocol
+status, protocol = pcall(require, "vim.lsp.protocol")
+if not status then
+  return
+end
+
+-- format on save
+local augroup_format_on_save = vim.api.nvim_create_augroup("FormatOnSave", { clear = true })
+local format_on_save = function(_, bufnr)
+  vim.api.nvim_clear_autocmds({
+    group = augroup_format_on_save,
+    buffer = bufnr,
+  })
+  vim.api.nvim_create_autocmd("BufWritePre", {
+    group = augroup_format_on_save,
+    buffer = bufnr,
+    callback = function()
+      vim.lsp.buf.format({ bufnr = bufnr })
+    end,
+  })
+end
+local enable_format_on_save = {
+  "sumneko_lua",
+  "denols",
+  "tsserver",
+}
 
 -- enable keybinds for available LSP servers
 local on_attach = function(client, bufnr)
-	-- normal
-	u.set_buf_keymap(bufnr, "n", { noremap = true, silent = true }, {
-		{ "gf", "<cmd>Lspsaga lsp_finder<CR>" }, -- show definition, references
-		{ "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>" }, -- go to declaration
-		{ "gd", "<cmd>Lspsaga peek_definition<CR>" }, -- see definition and make edits in window
-		{ "gi", "<cmd>lua vim.lsp.buf.implemetation()<CR>" }, -- go to implemetation
-		{ "<Leader>ca", "<cmd>Lspsaga code_action<CR>" }, -- see available code actions
-		{ "<Leader>rn", "<cmd>Lspsaga rename<CR>" }, -- smart rename
-		{ "<Leader>d", "<cmd>Lspsaga show_line_diagnostics<CR>" }, -- show diagnostics for line
-		{ "<Leader>d", "<cmd>Lspsaga show_cursor_diagnostics<CR>" }, -- show diagnostics for cursor
-		{ "[d", "<cmd>Lspsaga diagnostic_jump_prev<CR>" }, -- jump to previous diagnostic in buffer
-		{ "]d", "<cmd>Lspsaga diagnostic_jump_next<CR>" }, -- jump to next diagnostic in buffer
-		{ "K", "<cmd>Lspsaga hover_doc<CR>" }, -- show documentation for what is under cursor
-		{ "<Leader>o", "<cmd>LSoutlineToggle<CR>" }, -- toggle outline on the right hand
-		{ "<leader>f", ":lua vim.lsp.buf.format({ async = true })<CR>" }, -- formating on demand
-	})
+  -- formating on save
+  print(client.name)
+  if u.in_array(enable_format_on_save, client.name) then
+    format_on_save(client, bufnr)
+  end
+  -- normal
+  u.set_buf_keymap(bufnr, "n", { noremap = true, silent = true }, {
+    { "gf", "<cmd>Lspsaga lsp_finder<CR>" }, -- show definition, references
+    { "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>" }, -- go to declaration
+    { "gd", "<cmd>Lspsaga peek_definition<CR>" }, -- see definition and make edits in window
+    { "gi", "<cmd>lua vim.lsp.buf.implemetation()<CR>" }, -- go to implemetation
+    { "<Leader>ca", "<cmd>Lspsaga code_action<CR>" }, -- see available code actions
+    { "<Leader>rn", "<cmd>Lspsaga rename<CR>" }, -- smart rename
+    { "<Leader>d", "<cmd>Lspsaga show_line_diagnostics<CR>" }, -- show diagnostics for line
+    { "<Leader>d", "<cmd>Lspsaga show_cursor_diagnostics<CR>" }, -- show diagnostics for cursor
+    { "[d", "<cmd>Lspsaga diagnostic_jump_prev<CR>" }, -- jump to previous diagnostic in buffer
+    { "]d", "<cmd>Lspsaga diagnostic_jump_next<CR>" }, -- jump to next diagnostic in buffer
+    { "K", "<cmd>Lspsaga hover_doc<CR>" }, -- show documentation for what is under cursor
+    { "<Leader>o", "<cmd>LSoutlineToggle<CR>" }, -- toggle outline on the right hand
+    { "<leader>f", ":lua vim.lsp.buf.format({ async = true })<CR>" }, -- formating on demand
+  })
 
-	if client.name == "tsserver" then
-		-- normal
-		u.set_buf_keymap(bufnr, "n", { noremap = true, silent = true }, {
-			{ "<Leader>rf", "<cmd>TypescriptRenameFile<CR>" }, -- rename file and update imports
-			{ "<Leader>oi", "<cmd>TypescriptOrganizeImports<CR>" }, -- organize imports (not in youtube nvim video)
-			{ "<Leader>ru", "<cmd>TypescriptRemoveUnused<CR>" }, -- remove unused variables (not in youtube nvim video)
-		})
-	end
+  if false and client.name == "tsserver" then
+    -- normal
+    u.set_buf_keymap(bufnr, "n", { noremap = true, silent = true }, {
+      { "<Leader>rf", "<cmd>TypescriptRenameFile<CR>" }, -- rename file and update imports
+      { "<Leader>oi", "<cmd>TypescriptOrganizeImports<CR>" }, -- organize imports (not in youtube nvim video)
+      { "<Leader>ru", "<cmd>TypescriptRemoveUnused<CR>" }, -- remove unused variables (not in youtube nvim video)
+    })
+  end
 end
+
+protocol.CompletionItemKind = {
+  "", -- Text
+  "", -- Method
+  "", -- Function
+  "", -- Constructor
+  "", -- Field
+  "", -- Variable
+  "", -- Class
+  "ﰮ", -- Interface
+  "", -- Module
+  "", -- Property
+  "", -- Unit
+  "", -- Value
+  "", -- Enum
+  "", -- Keyword
+  "﬌", -- Snippet
+  "", -- Color
+  "", -- File
+  "", -- Reference
+  "", -- Folder
+  "", -- EnumMember
+  "", -- Constant
+  "", -- Struct
+  "", -- Event
+  "ﬦ", -- Operator
+  "", -- TypeParameter
+}
 
 -- used to enable autocompletion (assign to every lsp server config)
 local capabilities = cmp_nvim_lsp.default_capabilities()
 
 -- Change the Diagnostic symbols in the sign column (gutter)
--- (not in youtube nvim video)
 local signs = {
-	Error = "", -- 0xf188
-	Warn = "", -- 0xf421
-	Info = "", -- 0xf41b
-	Hint = "", -- 0xf400
+  Error = "", -- 0xf188
+  Warn = "", -- 0xf421
+  Info = "", -- 0xf41b
+  Hint = "", -- 0xf400
 }
 for type, icon in pairs(signs) do
-	local hl = "DiagnosticSign" .. type
-	vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
+  local hl = "DiagnosticSign" .. type
+  vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
+end
+
+local function format_virtual_text(diagnostic)
+  local icon = signs.Info
+  if diagnostic.severity == vim.diagnostic.severity.ERROR then
+    icon = signs.Error
+  end
+  if diagnostic.severity == vim.diagnostic.severity.WARN then
+    icon = signs.Warn
+  end
+  if diagnostic.severity == vim.diagnostic.severity.HINT then
+    icon = signs.Hint
+  end
+  if icon == signs.Info then
+    return string.format(" %s %s", icon, diagnostic.message)
+  end
+  return string.format(" %s [%s][%s] %s", icon, diagnostic.code, diagnostic.source, diagnostic.message)
 end
 
 -- configure html server
-lspconfig["html"].setup({
-	capabilities = capabilities,
-	on_attach = on_attach,
-})
-
--- configure typescript server with plugin
-typescript.setup({
-	server = {
-		root_dir = lspconfig.util.root_pattern("package.json"),
-		capabilities = capabilities,
-		on_attach = on_attach,
-	},
-})
+-- lspconfig["html"].setup({
+-- 	capabilities = capabilities,
+-- 	on_attach = on_attach,
+-- })
 
 -- configure deno server
 lspconfig["denols"].setup({
-	root_dir = lspconfig.util.root_pattern("deno.json"),
-	capabilities = capabilities,
-	on_attach = on_attach,
+  root_dir = lspconfig.util.root_pattern("deno.json"),
+  capabilities = capabilities,
+  on_attach = on_attach,
+})
+
+-- configure typescript server with plugin
+-- typescript.setup({
+-- 	server = {
+-- 		root_dir = lspconfig.util.root_pattern("package.json"),
+-- 		capabilities = capabilities,
+-- 		on_attach = on_attach,
+-- 	},
+-- })
+lspconfig["tsserver"].setup({
+  root_dir = lspconfig.util.root_pattern("package.json"),
+  on_attach = on_attach,
+  -- filetypes = { "typescript", "typescriptreact", "typescript.tsx" },
+  cmd = { "typescript-language-server.cmd", "--stdio" },
+  capabilities = capabilities,
 })
 
 -- configure css server
-lspconfig["cssls"].setup({
-	capabilities = capabilities,
-	on_attach = on_attach,
-})
+-- lspconfig["cssls"].setup({
+-- 	capabilities = capabilities,
+-- 	on_attach = on_attach,
+-- })
 
 -- configure tailwindcss server
-lspconfig["tailwindcss"].setup({
-	capabilities = capabilities,
-	on_attach = on_attach,
-})
+-- lspconfig["tailwindcss"].setup({
+-- 	capabilities = capabilities,
+-- 	on_attach = on_attach,
+-- })
 
 -- configure emmet language server
-lspconfig["emmet_ls"].setup({
-	capabilities = capabilities,
-	on_attach = on_attach,
-	filetypes = {
-		"html",
-		"typescriptreact",
-		"javascriptreact",
-		"css",
-		"sass",
-		"scss",
-		"less",
-		"svelte",
-	},
-})
+-- lspconfig["emmet_ls"].setup({
+-- 	capabilities = capabilities,
+-- 	on_attach = on_attach,
+-- 	filetypes = {
+-- 		"html",
+-- 		"typescriptreact",
+-- 		"javascriptreact",
+-- 		"css",
+-- 		"sass",
+-- 		"scss",
+-- 		"less",
+-- 		"svelte",
+-- 	},
+-- })
 
 -- configure lua server (with special settings)
 lspconfig["sumneko_lua"].setup({
-	capabilities = capabilities,
-	on_attach = on_attach,
-	settings = { -- custom settings for lua
-		Lua = {
-			-- make the language server recognize "vim" global
-			diagnostics = {
-				globals = { "vim" },
-			},
-			workspace = {
-				-- make language server aware of runtime files
-				library = {
-					[VIMRUNTIME_LUA] = true,
-					[CONFIG_LUA] = true,
-				},
-			},
-		},
-	},
+  capabilities = capabilities,
+  on_attach = on_attach,
+  settings = { -- custom settings for lua
+    Lua = {
+      diagnostics = {
+        -- make the language server recognize "vim" global
+        globals = { "vim", "use" },
+      },
+      workspace = {
+        -- make language server aware of runtime files
+        library = {
+          [VIMRUNTIME_LUA] = true,
+          [CONFIG_LUA] = true,
+        },
+        checkThirdParty = false,
+      },
+    },
+  },
+})
+
+vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
+  signs = true,
+  underline = true,
+  update_in_insert = false,
+  virtual_text = {
+    spacing = 2,
+    prefix = "•",
+    source = false,
+    severity = {
+      min = vim.diagnostic.severity.HINT,
+    },
+    format = format_virtual_text,
+  },
+  severity_sort = true,
+  float = {
+    focusable = false,
+    header = { signs.Error .. " Diagnostics:", "Normal" },
+    scope = "line",
+    source = false,
+    format = format_virtual_text,
+  },
 })
