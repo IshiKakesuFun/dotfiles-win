@@ -120,15 +120,15 @@ telescope.setup({
 		vimgrep_arguments = vimgrep_arguments,
 		mappings = {
 			n = {
-				["<M-p"] = layout.toggle_preview,
+				["<M-p>"] = layout.toggle_preview,
 				["cd"] = M.cd_to_entry,
 				["lcd"] = M.lcd_to_entry,
 				["tcd"] = M.tcd_to_entry,
 			},
 			i = {
-				["<C-u"] = false, -- If you'd prefer Telescope to clear the prompt on
+				["<C-u>"] = false, -- If you'd prefer Telescope to clear the prompt on
 				-- <C-u> rather than scroll the previewer
-				["<M-p"] = layout.toggle_preview,
+				["<M-p>"] = layout.toggle_preview,
 			},
 		},
 	},
@@ -159,6 +159,12 @@ telescope.setup({
 			case_mode = "smart_case", -- or "ignore_case" or "respect_case"
 			-- the default case_mode is "smart_case"
 		},
+		file_browser = {
+			-- theme = "dropdown",
+			hijack_netrw = true,
+			prompt_prefix = " ",
+			selection_caret = " ",
+		},
 	},
 })
 -- To get fzf loaded and working with telescope, you need to call
@@ -168,29 +174,95 @@ telescope.load_extension("fzf")
 -- load_extension, somewhere after setup function:
 telescope.load_extension("file_browser")
 
-u.set_keymap("n", { noremap = true, silent = true }, {
-	{ "<Leader>ti", "<cmd>Telescope builtin<CR>" }, -- all buildin functions
+local kmOpt = { noremap = true, silent = true }
+u.set_keymap("n", kmOpt, {
+	{ ";i", "<cmd>Telescope builtin<CR>" }, -- all buildin functions
+	-- { "<Leader>ti", "<cmd>Telescope builtin<CR>" }, -- all buildin functions
 
-	{ "<Leader>tb", "<cmd>Telescope buffers<CR>" },
-	{ "<Leader>te", "<cmd>Telescope file_browser path=%:p:h<CR>" },
-	{ "<Leader>tff", "<cmd>Telescope find_files<CR>" },
-	{ "<Leader>tg", "<cmd>Telescope live_grep<CR>" },
-	{ "<Leader>th", "<cmd>Telescope help_tags<CR>" },
-	{ "<Leader>tk", "<cmd>Telescope keymaps<CR>" },
-	{ "<Leader>tp", '<cmd>lua require("plugins.telescope").git_or_find_files()<CR>' },
-	{ "<Leader>tq", "<cmd>Telescope quickfix<CR>" },
-	{ "<Leader>tr", "<cmd>Telescope registers<CR>" },
+	-- { "<Leader>tb", "<cmd>Telescope buffers<CR>" },
+	-- { "<Leader>te", "<cmd>Telescope file_browser path=%:p:h<CR>" },
+	-- { "<Leader>tff", "<cmd>Telescope find_files<CR>" },
+	-- { "<Leader>tg", "<cmd>Telescope live_grep<CR>" },
+	-- { "<Leader>th", "<cmd>Telescope help_tags<CR>" },
+	-- { "<Leader>tk", "<cmd>Telescope keymaps<CR>" },
+	-- { "<Leader>tp", '<cmd>lua require("plugins.telescope").git_or_find_files()<CR>' },
+	-- { "<Leader>tq", "<cmd>Telescope quickfix<CR>" },
+	-- { "<Leader>tr", "<cmd>Telescope registers<CR>" },
 	-- { '<Leader>ts', '<cmd>Telescope grep_string<CR>' },
-	{ "<Leader>ts", '<cmd>lua require("plugins.telescope").grep_for()<CR>' },
-	{ "<Leader>tw", '<cmd>lua require("plugins.telescope").grep_current_word()<CR>' },
+	-- { "<Leader>ts", '<cmd>lua require("plugins.telescope").grep_for()<CR>' },
+	-- { "<Leader>tw", '<cmd>lua require("plugins.telescope").grep_current_word()<CR>' },
 
-	{ "<Leader>td", '<cmd>lua require("plugins.telescope").dot_files()<CR>' },
-	{ "<Leader>tfr", '<cmd>lua require("plugins.telescope").search_repos()<CR>' },
+	-- { "<Leader>td", '<cmd>lua require("plugins.telescope").dot_files()<CR>' },
+	-- { "<Leader>tfr", '<cmd>lua require("plugins.telescope").search_repos()<CR>' },
+
 	{ "<Leader>gt", "<cmd>Telescope git_stash<CR>" },
 	{ "<Leader>gs", "<cmd>Telescope git_status<CR>" },
 	{ "<Leader>gb", "<cmd>Telescope git_branches<CR>" },
 	{ "<Leader>gc", "<cmd>Telescope git_commits<CR>" },
 	{ "<Leader>gcb", "<cmd>Telescope git_bcommits<CR>" },
 })
+
+local function telescope_buffer_dir()
+	return vim.fn.expand("%:p:h")
+end
+
+local km = vim.keymap.set
+km("n", "\\\\", function()
+	builtin.buffers()
+end, kmOpt)
+km("n", ";;", function()
+	builtin.resume()
+end, kmOpt)
+km("n", ";d", function()
+	builtin.diagnostics()
+end, kmOpt)
+km("n", ";q", function()
+	builtin.quickfix()
+end, kmOpt)
+km("n", ";k", function()
+	builtin.keymaps()
+end, kmOpt)
+km("n", ";h", function()
+	builtin.help_tags()
+end, kmOpt)
+km("n", ";r", function()
+	builtin.registers()
+end, kmOpt)
+km("n", ";g", function()
+	builtin.live_grep()
+end, kmOpt)
+km("n", ";f", function()
+	builtin.find_files({
+		no_ignore = false,
+		hidden = true,
+	})
+end, kmOpt)
+km("n", ";e", function()
+	telescope.extensions.file_browser.file_browser({
+		path = "%:p:h",
+		cwd = telescope_buffer_dir(),
+		respect_gitignore = false,
+		hidden = true,
+		grouped = true,
+		previewer = false,
+		initial_mode = "insert",
+		layout_config = { height = 40 },
+	})
+end, kmOpt)
+km("n", ";p", function()
+	M.git_or_find_files()
+end, kmOpt)
+km("n", ";c", function()
+	M.dot_files()
+end, kmOpt)
+km("n", ";s", function()
+	M.grep_for()
+end, kmOpt)
+km("n", ";w", function()
+	M.grep_current_word()
+end, kmOpt)
+km("n", ";a", function()
+	M.search_repos()
+end, kmOpt)
 
 return M
