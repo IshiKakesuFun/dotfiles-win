@@ -256,3 +256,13 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagn
     format = format_virtual_text,
   },
 })
+
+vim.diagnostic.config({
+  virtual_text = {
+    prefix = "•",
+  },
+  update_in_insert = true,
+  float = {
+    source = "always", -- Or "if_many"
+  },
+})
