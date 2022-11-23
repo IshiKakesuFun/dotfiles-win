@@ -29,6 +29,7 @@ u.set_keymap("n", { noremap = true, silent = true }, {
 	{ "se", "<C-w>=" }, -- make split windows equal width & height
 	{ "sc", ":close<CR>" }, -- close current split window
 	{ "sx", "<C-w>x" }, -- exchange splited windows
+	{ "sw", "<C-w>w" }, -- switch to next window; or use with number {winnr}sw
 
 	-- Smart way to move between windows
 	{ "sh", "<C-w>h" },

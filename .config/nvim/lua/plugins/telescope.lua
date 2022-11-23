@@ -137,17 +137,21 @@ telescope.setup({
 		find_files = {
 			-- `hidden = true` will still show the inside of `.git/` as it's not
 			-- `.gitignore`d.
-			prompt_prefix = " ", -- 
-			selection_caret = " ",
+			prompt_prefix = " ", -- 0xe209
+			selection_caret = " ", -- 0xf064
 			find_command = { "rg", "--files", "--hidden", "--glob", "!.git/*" },
 		},
 		git_files = {
 			show_untracked = true,
-			prompt_prefix = " ",
+			prompt_prefix = " ", -- 0xe702
 			selection_caret = " ",
 		},
 		grep_string = {
-			prompt_prefix = " ",
+			prompt_prefix = " ", -- 0xf848
+			selection_caret = " ",
+		},
+		diagnostics = {
+			prompt_prefix = "律", -- 0xf9d8
 			selection_caret = " ",
 		},
 	},
@@ -162,7 +166,7 @@ telescope.setup({
 		file_browser = {
 			-- theme = "dropdown",
 			hijack_netrw = true,
-			prompt_prefix = " ",
+			prompt_prefix = " ", -- 0xe5fe
 			selection_caret = " ",
 		},
 	},

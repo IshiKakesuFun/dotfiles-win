@@ -12,12 +12,42 @@ vim.cmd("highlight link gitsignschange modemsg")
 
 gitsigns.setup({
 	signs = {
-		add = { hl = "gitsignsadd", text = "▎", numhl = "gitsignsaddnr", linehl = "gitsignsaddln" },
-		change = { hl = "gitsignschange", text = "▎", numhl = "gitsignschangenr", linehl = "gitsignschangeln" },
-		delete = { hl = "gitsignsdelete", text = " ", numhl = "gitsignsdeletenr", linehl = "gitsignsdeleteln" },
-		topdelete = { hl = "gitsignsdelete", text = " ", numhl = "gitsignsdeletenr", linehl = "gitsignsdeleteln" },
-		changedelete = { hl = "gitsignschange", text = "▎", numhl = "gitsignschangenr", linehl = "gitsignschangeln" },
-		untracked = { hl = "gitsignsadd", text = "┆ ", numhl = "gitsignsaddnr", linehl = "gitsignsaddln" },
+		add = {
+			hl = "gitsignsadd",
+			text = "▎", -- 0x258e
+			numhl = "gitsignsaddnr",
+			linehl = "gitsignsaddln",
+		},
+		change = {
+			hl = "gitsignschange",
+			text = "▎", -- 0x258e
+			numhl = "gitsignschangenr",
+			linehl = "gitsignschangeln",
+		},
+		delete = {
+			hl = "gitsignsdelete",
+			text = " ", -- 0x258e
+			numhl = "gitsignsdeletenr",
+			linehl = "gitsignsdeleteln",
+		},
+		topdelete = {
+			hl = "gitsignsdelete",
+			text = " ", -- 0xf0de
+			numhl = "gitsignsdeletenr",
+			linehl = "gitsignsdeleteln",
+		},
+		changedelete = {
+			hl = "gitsignschange",
+			text = "▎", -- 0x258e
+			numhl = "gitsignschangenr",
+			linehl = "gitsignschangeln",
+		},
+		untracked = {
+			hl = "gitsignsadd",
+			text = "┆ ", -- 0x2506
+			numhl = "gitsignsaddnr",
+			linehl = "gitsignsaddln",
+		},
 	},
 	signcolumn = true, -- toggle with `:gitsigns toggle_signs`
 	numhl = false, -- toggle with `:gitsigns toggle_numhl`
