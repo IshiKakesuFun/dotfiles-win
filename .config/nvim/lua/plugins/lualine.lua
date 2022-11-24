@@ -2,7 +2,7 @@
 -- https://github.com/nvim-lualine/lualine.nvim
 --------------------------------------------------------------------------------
 -- import plugin safely
-local status, plugin = pcall(require, "lualine")
+local status, lualine = pcall(require, "lualine")
 if not status then
 	return
 end
@@ -14,21 +14,20 @@ if not DEFAULT_COLOR_THEME then
 end
 local lualine_theme = require("lualine.themes." .. vim.g.colors_name)
 
--- local mode = { "mode", upper = true }
+local mode = { 
+  "mode", 
+  upper = false, 
+}
 local branch = {
 	"branch",
-	icon = "", -- 0xea68
+	icon = ICON.branch, -- 0xea68
 }
 local diff = {
 	"diff",
 	-- Displays a colored diff status if set to true
 	colored = true,
-	-- Changes the symbols used by the diff. 
-	symbols = {
-		added = "", -- 0xf0fe
-		modified = "", -- 0xf14b
-		removed = "", -- 0xf146
-	},
+	-- Changes the symbols used by the diff.
+	symbols = ICON.DIFF,
 }
 local filename = {
 	"filename",
@@ -44,16 +43,16 @@ local filename = {
 	symbols = {
 		-- Text to show when the file is modified.
 		-- default: "[+]"
-		modified = "", -- 0xf692
+		modified = ICON.floppy,
 		-- Text to show when the file is non-modifiable or readonly.
 		-- default: "[-]"
-		readonly = "", -- 0xf023
+		readonly = ICON.lock,
 		-- Text to show for unnamed buffers.
 		-- default: "[No Name]"
 		unnamed = "[no name]",
 		-- Text to show for new created file before first writting
 		-- default: "[New]"
-		newfile = "", -- 0xea6a
+		newfile = ICON.star,
 	},
 }
 local filenamePath = { "filename", file_status = true, path = 1 }
@@ -77,11 +76,7 @@ local windows = {
 local filetype = { "filetype", icon_only = false }
 local fileformat = {
 	"fileformat",
-	symbols = {
-		unix = "", -- 0xe712
-		dos = "", -- 0xe70f
-		mac = "", -- 0xe711
-	},
+	symbols = ICON.OS,
 }
 local diagnostics = {
 	"diagnostics",
@@ -95,58 +90,39 @@ local diagnostics = {
 	},
 	-- Displays diagnostics for the defined severity types
 	sections = { "error", "warn", "info", "hint" },
-	symbols = {
-		error = "", -- 0xf188
-		warn = "", -- 0xf421
-		info = "", -- 0xf41b
-		hint = "", -- 0xf400
-	},
+	symbols = ICON.DIAGNOSTICS,
 	colored = true, -- Displays diagnostics status in color if set to true.
 	update_in_insert = false, -- Update diagnostics in insert mode.
 	always_visible = false, -- Show diagnostics even if there are none.
 }
 
 -- call plugin setup
-plugin.setup({
+lualine.setup({
 	options = {
 		globalstatus = false,
 		icons_enabled = true,
 		-- theme = "auto",
 		theme = lualine_theme,
-		-- component_separators = {
-		--   left = '', -- 0xe0b1
-		--   right = '' -- 0xe0b3
-		-- },
-		-- section_separators = {
-		--   left = '', -- 0xe0b0
-		--   right = '' -- 0xe0b2
-		-- },
-		section_separators = {
-			left = "", -- 0xe0bc
-			right = "", -- 0xe0ba
-		},
-		component_separators = {
-			left = "", -- 0xe0bd
-			right = "", -- 0xe0bb
-		},
+    section_separators = ICON.SEPARATORS.section,
+    component_separators = ICON.SEPARATORS.component,
 	},
 	extensions = { 
     "fugitive", 
     "fzf", 
     "nvim-tree", 
-    "quickfix", 
+    -- "quickfix", 
     -- "toggleterm" 
   },
 	tabline = {
 		lualine_a = {},
 		lualine_b = { windows },
 		lualine_c = {},
-		lualine_x = {},
+		lualine_x = { lsp_progress },
 		lualine_y = {},
 		lualine_z = { tabs },
 	},
 	sections = {
-		lualine_a = { branch },
+		lualine_a = { mode, branch },
 		lualine_b = { filename },
 		lualine_c = { diff },
 		lualine_x = { diagnostics },

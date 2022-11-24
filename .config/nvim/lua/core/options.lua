@@ -96,7 +96,7 @@ o.signcolumn = "yes"
 o.list = true
 local status, u = pcall(require, "core.utils")
 if status then
-  o.listchars = u.serialize_options(ICON.listchars)
+  o.listchars = u.serialize_options(ICON.LISTCHARS)
 end
 o.pumheight = 10 -- Makes popup menu smaller
 o.cmdheight = 2 -- [set cmdheight=3] More space for displaying messages
