@@ -94,7 +94,10 @@ o.cursorcolumn = false
 o.colorcolumn = "80,120"
 o.signcolumn = "yes"
 o.list = true
-o.listchars = "tab: ,trail:·,nbsp:‿" -- →»
+local status, u = pcall(require, "core.utils")
+if status then
+  o.listchars = u.serialize_options(ICON.listchars)
+end
 o.pumheight = 10 -- Makes popup menu smaller
 o.cmdheight = 2 -- [set cmdheight=3] More space for displaying messages
 o.scrolloff = 8 -- Make it so there are always ten lines below my cursor

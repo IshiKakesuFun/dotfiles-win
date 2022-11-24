@@ -62,8 +62,9 @@ u.set_keymap("n", { noremap = true, silent = true }, {
 	{ "0", "^" },
 	{ "^", "0" },
 
-	-- select all
-	{ "<C-a>", "ggVG" },
+	-- old habbits
+	{ "<C-a>", "ggVG" }, -- select all
+	{ "<C-s>", "<cmd>w<CR>" }, -- save changes 
 
 	-- capy all messages to clipboard
 	{ "<leader>cm", "<cmd>let @*=execute('messages')<cr>" },

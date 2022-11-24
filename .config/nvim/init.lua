@@ -1,7 +1,7 @@
 require("globals")
 require("plugins-setup")
 
-require("core.utils") -- utils before any other settings
+-- require("core.utils")
 require("core.options")
 require("core.keymaps")
 

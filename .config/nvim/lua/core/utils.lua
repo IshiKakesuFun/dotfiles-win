@@ -38,6 +38,18 @@ M.in_array = function(array, value)
 	return false
 end
 
+M.serialize_options = function(tbl)
+  local serialized = ""
+  local divider = ""
+  if type(tbl) == "table" then
+    for k, v in pairs(tbl) do
+      serialized = serialized .. divider .. k .. ":" .. v
+      divider = ","
+    end
+  end
+  return serialized 
+end
+
 M.set_keymap = function(mode, opts, keymaps)
 	for _, keymap in ipairs(keymaps) do
 		vim.api.nvim_set_keymap(mode, keymap[1], keymap[2], opts)

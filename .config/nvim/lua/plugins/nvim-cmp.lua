@@ -68,7 +68,7 @@ cmp.setup({
 			-- options: 'text', 'text_symbol', 'symbol_text', 'symbol'
 			mode = "symbol",
 			maxwidth = 50,
-			ellipsis_char = "…",
+			ellipsis_char = ICON.ellipsis, -- "…",
 		}),
 	},
 })

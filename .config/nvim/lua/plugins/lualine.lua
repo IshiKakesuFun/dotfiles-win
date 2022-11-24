@@ -9,7 +9,7 @@ end
 
 -- get lualine theme
 if not DEFAULT_COLOR_THEME then
-	DEFAULT_COLOR_THEME = "nightfox"
+	DEFAULT_COLOR_THEME = "gruvbox"
 	vim.cmd("colorscheme " .. DEFAULT_COLOR_THEME)
 end
 local lualine_theme = require("lualine.themes." .. vim.g.colors_name)
@@ -130,7 +130,13 @@ plugin.setup({
 			right = "", -- 0xe0bb
 		},
 	},
-	extensions = { "fugitive", "fzf", "nvim-tree" },
+	extensions = { 
+    "fugitive", 
+    "fzf", 
+    "nvim-tree", 
+    "quickfix", 
+    -- "toggleterm" 
+  },
 	tabline = {
 		lualine_a = {},
 		lualine_b = { windows },
@@ -161,5 +167,4 @@ local km = vim.keymap.set
 km("n", "\\t", function()
 	local name = vim.fn.input("rename tab " .. vim.api.nvim_tabpage_get_number(0) .. ": ")
 	vim.cmd(":LualineRenameTab " .. name)
-	vim.cmd("command!")
 end)

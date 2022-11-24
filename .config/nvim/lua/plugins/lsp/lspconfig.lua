@@ -220,7 +220,7 @@ lspconfig["sumneko_lua"].setup({
     Lua = {
       diagnostics = {
         -- make the language server recognize "vim" global
-        globals = { "vim", "use" },
+        globals = { "vim" },
       },
       workspace = {
         -- make language server aware of runtime files
